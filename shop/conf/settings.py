@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
 
 import environ
 
@@ -32,7 +33,6 @@ DEBUG = env("DEBUG", cast=str)
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")])
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'db.apps.DbConfig'
+    'db.apps.DbConfig',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +130,104 @@ MEDIA_URL = env("MEDIA_URL", cast=str)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'db.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    # Время жизни токена доступа (в данном случае 5 минут)
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+
+    # Время жизни токена обновления (в данном случае 1 день)
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+
+    # Указывает, нужно ли обновлять токены обновления при каждом запросе
+    "ROTATE_REFRESH_TOKENS": False,
+
+    # Указывает, нужно ли добавлять токен в черный список после его обновления
+    "BLACKLIST_AFTER_ROTATION": False,
+
+    # Указывает, нужно ли обновлять время последнего входа пользователя
+    "UPDATE_LAST_LOGIN": False,
+
+    # Алгоритм, используемый для подписи токенов (в данном случае HMAC SHA-256)
+    "ALGORITHM": "HS256",
+
+    # Ключ для подписи токенов, обычно это SECRET_KEY вашего Django проекта
+    "SIGNING_KEY": SECRET_KEY,
+
+    # Ключ для проверки подписи токенов (обычно оставляется пустым)
+    "VERIFYING_KEY": "",
+
+    # Аудитория токенов (можно использовать для ограничения использования токена)
+    "AUDIENCE": None,
+
+    # Издатель токенов (можно использовать для идентификации источника токена)
+    "ISSUER": None,
+
+    # Пользовательский JSON-кодер (можно использовать для изменения способа сериализации)
+    "JSON_ENCODER": None,
+
+    # URL для получения JWK (JSON Web Key) для проверки подписи токена (обычно не используется)
+    "JWK_URL": None,
+
+    # Допуск по времени для проверки срока действия токена (0 означает отсутствие допуска)
+    "LEEWAY": 0,
+
+    # Типы заголовков аутентификации, используемые для передачи токена (в данном случае Bearer)
+    "AUTH_HEADER_TYPES": ("Bearer",),
+
+    # Имя заголовка, в котором будет передаваться токен (обычно HTTP_AUTHORIZATION)
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+
+    # Поле, представляющее идентификатор пользователя (по умолчанию 'id')
+    "USER_ID_FIELD": "id",
+
+    # Поле, в котором будет храниться идентификатор пользователя в токене
+    "USER_ID_CLAIM": "user_id",
+
+    # Правило аутентификации пользователя (по умолчанию используется стандартное правило)
+    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
+
+    # Классы токенов аутентификации, которые будут использоваться (в данном случае только AccessToken)
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+
+    # Имя поля для указания типа токена (обычно 'token_type')
+    "TOKEN_TYPE_CLAIM": "token_type",
+
+    # Класс пользователя токена (по умолчанию TokenUser )
+    "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser ",
+
+    # Уникальный идентификатор токена (JTI - JWT ID)
+    "JTI_CLAIM": "jti",
+
+    # Имя поля для указания времени истечения для скользящего токена обновления
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+
+    # Время жизни скользящего токена (в данном случае 5 минут)
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+
+    # Время жизни скользящего токена обновления (в данном случае 1 день)
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+
+    # Сериализатор для получения токенов (по умолчанию TokenObtainPairSerializer)
+    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+
+    # Сериализатор для обновления токенов (по умолчанию TokenRefreshSerializer)
+    "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
+
+    # Сериализатор для проверки токенов (по умолчанию TokenVerifySerializer)
+    "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
+
+    # Сериализатор для черного списка токенов (по умолчанию TokenBlacklistSerializer)
+    "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
+
+    # Сериализатор для получения скользящих токенов (по умолчанию TokenObtainSlidingSerializer)
+    "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
+
+    # Сериализатор для обновления скользящих токенов (по умолчанию TokenRefreshSlidingSerializer)
+    "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+}
