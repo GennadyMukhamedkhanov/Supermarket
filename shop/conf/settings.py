@@ -138,8 +138,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    # Время жизни токена доступа (в данном случае 5 минут)
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    # Время жизни токена доступа (в данном случае 55 минут)
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=55),
 
     # Время жизни токена обновления (в данном случае 1 день)
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
@@ -231,3 +231,13 @@ SIMPLE_JWT = {
     # Сериализатор для обновления скользящих токенов (по умолчанию TokenRefreshSlidingSerializer)
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mail.ru'  # SMTP-сервер Mail.ru
+EMAIL_PORT = 587  # Порт для TLS
+EMAIL_USE_TLS = True  # Используйте TLS
+EMAIL_HOST_USER = 'dungreshmen2@mail.ru'  # Ваш адрес электронной почты
+EMAIL_HOST_PASSWORD = 'QxMQzVtaishY3azG4jnT'  # Пароль от электронной почты
+

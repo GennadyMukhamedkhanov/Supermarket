@@ -20,7 +20,7 @@ class User(AbstractUser):
     is_admin = models.BooleanField(default=False, verbose_name='Является админом')
 
     USERNAME_FIELD = 'phone_number'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username', 'email']
     objects = CustomUserManager()
 
 
