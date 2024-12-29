@@ -5,6 +5,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from api.views.email.sending import SendingEmailView
+from api.views.product.list import ProductsListView
 from api.views.token.get import CustomTokenObtainPairView
 from api.views.user.get_create_update import GetCreateUpdateUserView
 
@@ -21,5 +22,11 @@ urlpatterns = [
 
     # Отправка 4-х значного кода на почту
     path('sending_email_confirmation_code/', SendingEmailView.as_view(), name='sending_email'),
+
+    # Получение списка всех товаров с пагинацией
+    path('products/', ProductsListView.as_view(), name='products'),
+
+
+    path('products/categories/', ProductsListView.as_view(), name='products'),
 
 ]

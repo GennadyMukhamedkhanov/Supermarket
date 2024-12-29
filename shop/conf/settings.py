@@ -134,7 +134,10 @@ AUTH_USER_MODEL = 'db.User'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+
+    ),
+
+    'PAGE_SIZE': env("PAGE_SIZE", default=8, cast=int),
 }
 
 SIMPLE_JWT = {
