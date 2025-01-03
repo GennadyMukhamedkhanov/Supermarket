@@ -10,7 +10,7 @@ class Productline(admin.StackedInline):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug',)
+    list_display = ('id', 'name', 'slug',)
     fields = ('name', 'slug')
     list_filter = ('name', 'slug',)
     search_fields = ('name', 'slug',)
