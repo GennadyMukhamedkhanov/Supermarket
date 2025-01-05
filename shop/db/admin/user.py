@@ -10,7 +10,7 @@ class OrderInline(admin.StackedInline):
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'phone_number', 'email', 'is_manager', 'is_admin')
+    list_display = ('id','username', 'phone_number', 'email', 'is_manager', 'is_admin')
     fields = ('username', 'phone_number', 'is_manager',
               'is_admin', 'first_name', 'last_name', 'email')
     list_filter = ('username', 'phone_number', 'first_name', 'last_name', 'email')

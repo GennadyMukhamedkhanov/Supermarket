@@ -4,6 +4,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
+from api.views.cart.add import AddProductInCartUser
 from api.views.email.sending import SendingEmailView
 from api.views.product.create import ProductsCreateView
 from api.views.product.list import ProductsListView
@@ -29,6 +30,6 @@ urlpatterns = [
     # Создание нового товара (доступно только администратору)
     path('products/create/', ProductsCreateView.as_view(), name='product_create'),
 
-    #path('user/add_product_cart/<int:id>/', AddProductInCartUser.as_view(), name='add_product_cart'),
+    path('add_in_cart_product/<int:id>/', AddProductInCartUser.as_view(), name='add_product_cart'),
 
 ]

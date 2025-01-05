@@ -37,8 +37,10 @@ class GetCreateUpdateUserView(APIView):
     def put(self, request):
         self.permission_classes = [IsAuthenticated, IsAuthor]
         self.check_permissions(request)
+
         get_decoding_token = GetDecodingToken()
         token = get_decoding_token.get_token(request)
+
         self.user_id, self.username = get_decoding_token.get_decode(token)
         obj = get_object_or_404(User, id=self.user_id)
         self.check_object_permissions(
