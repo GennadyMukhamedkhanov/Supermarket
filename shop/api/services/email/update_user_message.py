@@ -1,7 +1,7 @@
 from django import forms
 from django.core.mail import send_mail
 from service_objects.services import Service
-import random
+
 from conf import settings
 
 

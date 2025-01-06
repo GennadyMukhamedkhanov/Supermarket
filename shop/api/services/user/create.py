@@ -13,7 +13,8 @@ class CreateUsersService(Service):
 
     def process(self):
         self.user_presence()
-        return self._create_user
+        self.create_user()
+        return True
 
     def user_presence(self):
         users = User.objects.filter(
@@ -25,8 +26,7 @@ class CreateUsersService(Service):
                 detail='Пользователь с такими данными уже существует.',
             )
 
-    @property
-    def _create_user(self):
+    def create_user(self):
         User.objects.create_user(
             email=self.cleaned_data['email'],
             phone_number=self.cleaned_data['phone_number'],
