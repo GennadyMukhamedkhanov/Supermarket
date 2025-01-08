@@ -5,8 +5,10 @@ from rest_framework_simplejwt.views import (
 )
 
 from api.views.cart.add import AddProductInCartUser
+from api.views.category.list import ListCategoriesView
 from api.views.email.sending import SendingEmailView
 from api.views.product.create import ProductsCreateView
+from api.views.product.get_product_by_category import GetProductByCategoryView
 from api.views.product.get_update_delete import GetUpdateDeleteProductView
 from api.views.product.list import ProductsListView
 from api.views.token.get import CustomTokenObtainPairView
@@ -32,6 +34,11 @@ urlpatterns = [
     path('products/create/', ProductsCreateView.as_view(), name='product_create'),
     # Получение, обновление или удаление товара по его ID (GET/PUT/DELETE)
     path('product/<int:id>/', GetUpdateDeleteProductView.as_view(), name='product_get_update_delete'),
+    # Получение списка категорий товаров (GET)
+    path('product/categories/', ListCategoriesView.as_view(), name='list_categories'),
+    # Получение товаров по категории (GET)
+    path('products/<int:category_id>/', GetProductByCategoryView.as_view(), name='get_product_by_category'),
+
 
 
 
