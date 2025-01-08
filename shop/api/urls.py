@@ -7,6 +7,7 @@ from rest_framework_simplejwt.views import (
 from api.views.cart.add import AddProductInCartUser
 from api.views.email.sending import SendingEmailView
 from api.views.product.create import ProductsCreateView
+from api.views.product.get_update_delete import GetUpdateDeleteProductView
 from api.views.product.list import ProductsListView
 from api.views.token.get import CustomTokenObtainPairView
 from api.views.user.get_create_update import GetCreateUpdateUserView
@@ -29,7 +30,13 @@ urlpatterns = [
     path('products/', ProductsListView.as_view(), name='products_list'),
     # Создание нового товара (доступно только администратору)
     path('products/create/', ProductsCreateView.as_view(), name='product_create'),
+    # Получение, обновление или удаление товара по его ID (GET/PUT/DELETE)
+    path('product/<int:id>/', GetUpdateDeleteProductView.as_view(), name='product_get_update_delete'),
 
+
+
+
+    # Добавление товара в корзину (POST)
     path('add_in_cart_product/<int:id>/', AddProductInCartUser.as_view(), name='add_product_cart'),
 
 ]

@@ -1,10 +1,8 @@
 from django import forms
-from rest_framework.generics import get_object_or_404
 from service_objects.fields import ModelField
 from service_objects.services import Service
-from rest_framework.exceptions import ParseError
 
-from db.models import Product, Category, User, Cart, CartItem
+from db.models import User, Cart, CartItem
 
 
 class AddProductInCartService(Service):
